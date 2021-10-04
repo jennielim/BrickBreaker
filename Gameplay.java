@@ -10,11 +10,13 @@ import javax.swing.Timer;
 import java.awt.Color;
 
 public class Gameplay extends JPanel implements KeyListener, ActionListener {
+    //initializing global variables
     private boolean play = false;
     private int score = 0;
 
     private int totalBricks = 21;
 
+    //used to perform a task repeatedly
     private Timer timer;
     private int delay = 8;
 
@@ -28,6 +30,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
     private MapGenerator map;
 
     public Gameplay() {
+        //when gameplay is called in the main, this sets up the window by adding the bricks and to allow the keys to work in the game.
         map = new MapGenerator(3, 7);
         addKeyListener(this);
         setFocusable(true);
@@ -94,10 +97,11 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
     public void actionPerformed(ActionEvent e) {
         timer.start();
         if(play) {
+            //this is how the ball will bounce off the panel and into the bricks
             if(new Rectangle(ballposX, ballposY, 20, 20).intersects(new Rectangle(playerX, 550, 100, 8))) {
                 ballYdir = -ballYdir;
             }
-
+            // initializes the bricks in the game
             A: for(int i =0; i < map.map.length; i++) {
                 for(int j = 0; j < map.map[0].length; j++) {
                     if (map.map[i][j] > 0) {
@@ -110,6 +114,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
                         Rectangle ballRect = new Rectangle(ballposX, ballposY, 20,20);
                         Rectangle brickRect = rect;
 
+                        //when the ball collides with the brick, the brick wll disappear
                         if(ballRect.intersects(brickRect)) {
                             map.setBrickValue(0, i, j);
                             totalBricks--;
@@ -142,12 +147,12 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
         repaint();
     }
 
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped(KeyEvent e) {}
 
-    }
     public void keyReleased(KeyEvent e) {}
 
     public void keyPressed(KeyEvent e) {
+        // if the right or left key is pressed, the panel will move
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             if (playerX >= 600) {
                 playerX = 600;
@@ -162,6 +167,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
                 moveLeft();
             }
         }
+        //if the enter key gets pressed, the game will restart
         if(e.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!play) {
                 play = true;
@@ -178,6 +184,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
             }
         }
     }
+    //dictates how far the panel will move when the left and right keys are pressed.
     public void moveRight() {
         play = true;
         playerX += 20;
@@ -187,5 +194,3 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
         playerX -= 20;
     }
 }
-
-
