@@ -5,6 +5,8 @@ import javax.swing.*;
 public class main {
 
         public static void main(String[] args) {
+            //starts and initializes the pop up window that the game will play on.
+            //JFrame builds the window and JPanel builds what goes inside the window
             JFrame obj = new JFrame();
             Gameplay gamePlay = new Gameplay();
             obj.setBounds(10, 10, 700, 600);
